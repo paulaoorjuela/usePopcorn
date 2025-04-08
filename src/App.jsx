@@ -1,6 +1,11 @@
 import { useState } from "react";
 import Navbar from "./Navbar";
 import MainContent from "./MainContent";
+import SearchBar from "./navbar-components/SearchBar";
+import NumResults from "./navbar-components/NumResults";
+import ListBox from "./main-content-components/ListBox";
+import WatchedBox from "./main-content-components/WatchedBox";
+import MovieList from "./main-content-components/list-box-components/MovieList";
 
 const tempMovieData = [
   {
@@ -31,8 +36,16 @@ export default function App() {
   
   return (
     <>
-      <Navbar movies={movies}/>
-      <MainContent movies={movies}/>
+      <Navbar>
+        <SearchBar/>
+        <NumResults movies={movies}/>
+      </Navbar>
+      <MainContent>
+        <ListBox>
+          <MovieList movies={movies}/>
+        </ListBox>
+        <WatchedBox />
+      </MainContent>
     </>
   );
 }
