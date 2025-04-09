@@ -75,8 +75,8 @@ export default function App() {
           <WatchedMoviesList watched={watched} />
         </MovieDisplayBox>
       </MainContent>
-      <StarRating maxRating={5}/>
-      <StarRating maxRating={10}/>
+      <StarRating maxRating={5} messages={['Terrible', 'Bad', 'Ok', 'Good', 'Amazing']}/>
+      <StarRating maxRating={10} size={14} color="purple" defaultRating={5}/>
     </>
   );
 }
