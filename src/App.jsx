@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import MainContent from "./MainContent";
 import SearchBar from "./navbar-components/SearchBar";
@@ -8,6 +8,7 @@ import MovieDisplayBox from "./main-content-components/MovieDisplayBox";
 import WatchedMoviesSummary from "./main-content-components/watched-box-components/WatchedMoviesSummary";
 import WatchedMoviesList from "./main-content-components/watched-box-components/WatchedMoviesList";
 import StarRating from "./StarRating";
+import Loader from "./Loader";
 
 const tempWatchedData = [
   {
@@ -56,9 +57,25 @@ const tempMovieData = [
   },
 ];
 
+const KEY = import.meta.env.VITE_KEY;
+
 export default function App() {
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
+  const [isLoading, setIsLoading] = useState(false)
+  const query = 'inception'
+  
+
+  useEffect(function(){
+    async function fetchMovies(params) {
+      setIsLoading(true)
+      const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`)
+      const data = await res.json()
+      setMovies(data.Search)
+      setIsLoading(false)
+    }
+    fetchMovies()
+  }, [])
 
   return (
     <>
@@ -68,7 +85,7 @@ export default function App() {
       </Navbar>
       <MainContent>
         <MovieDisplayBox>
-          <MovieList movies={movies} />
+          {isLoading ? <Loader /> : <MovieList movies={movies} />}
         </MovieDisplayBox>
         <MovieDisplayBox>
           <WatchedMoviesSummary watched={watched} />
