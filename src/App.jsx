@@ -7,7 +7,6 @@ import MovieList from "./main-content-components/list-box-components/MovieList";
 import MovieDisplayBox from "./main-content-components/MovieDisplayBox";
 import WatchedMoviesSummary from "./main-content-components/watched-box-components/WatchedMoviesSummary";
 import WatchedMoviesList from "./main-content-components/watched-box-components/WatchedMoviesList";
-import StarRating from "./StarRating";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
 import MovieDatails from "./MovieDetails";
@@ -130,8 +129,6 @@ export default function App() {
           }
         </MovieDisplayBox>
       </MainContent>
-      <StarRating maxRating={5} messages={['Terrible', 'Bad', 'Ok', 'Good', 'Amazing']}/>
-      <StarRating maxRating={10} size={14} color="purple" defaultRating={5}/>
     </>
   );
 }
