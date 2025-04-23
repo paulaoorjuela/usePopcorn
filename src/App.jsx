@@ -10,6 +10,7 @@ import WatchedMoviesList from "./main-content-components/watched-box-components/
 import StarRating from "./StarRating";
 import Loader from "./Loader";
 import ErrorMessage from "./ErrorMessage";
+import MovieDatails from "./MovieDetails";
 
 const tempWatchedData = [
   {
@@ -66,8 +67,15 @@ export default function App() {
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
+  const [selectedMovieId, setSelectedMovieId] = useState(null)
 
-  const TempQuery = 'inception'
+  function handleSelectMovie(movieId){
+    setSelectedMovieId(selectedMovieId => movieId === selectedMovieId ? null : movieId)
+  }
+
+  function handleCloseMovieDetails(){
+    setSelectedMovieId(null)
+  }
 
 
   useEffect(function(){
@@ -83,6 +91,7 @@ export default function App() {
         if (data.Response === 'False') throw new Error('Movie not found')
 
         setMovies(data.Search)
+        // console.log(data.Search)
       } catch(err){
         console.log(err.message)
         setError(err.message)
@@ -107,12 +116,18 @@ export default function App() {
       <MainContent>
         <MovieDisplayBox>
           {isLoading && <Loader />}
-          {!isLoading && !error && <MovieList movies={movies} />}
+          {!isLoading && !error && <MovieList movies={movies} onSelectMovie={handleSelectMovie}/>}
           {error && <ErrorMessage message={error} />}
         </MovieDisplayBox>
         <MovieDisplayBox>
-          <WatchedMoviesSummary watched={watched} />
-          <WatchedMoviesList watched={watched} />
+          {selectedMovieId ? (
+            <MovieDatails movieId={selectedMovieId} onCloseMovieDetails={handleCloseMovieDetails}/>
+          ) :
+          <>
+            <WatchedMoviesSummary watched={watched} />
+            <WatchedMoviesList watched={watched} />
+          </>
+          }
         </MovieDisplayBox>
       </MainContent>
       <StarRating maxRating={5} messages={['Terrible', 'Bad', 'Ok', 'Good', 'Amazing']}/>
