@@ -61,17 +61,20 @@ const tempMovieData = [
 const KEY = import.meta.env.VITE_KEY;
 
 export default function App() {
+  const [query, setQuery] = useState("");
   const [movies, setMovies] = useState(tempMovieData);
   const [watched, setWatched] = useState(tempWatchedData);
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
-  const query = 'twice'
-  
+
+  const TempQuery = 'inception'
+
 
   useEffect(function(){
     async function fetchMovies() {
       try{
         setIsLoading(true)
+        setError('') // reset error before fetching movies
         const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`)
 
         if(!res.ok) throw new Error('Something went wrong with fetching movies')
@@ -87,13 +90,18 @@ export default function App() {
         setIsLoading(false)
       }
     }
+    if(query.length < 3){
+      setMovies([])
+      setError('')
+      return
+    }
     fetchMovies()
-  }, [])
+  }, [query])
 
   return (
     <>
       <Navbar>
-        <SearchBar />
+        <SearchBar query={query} setQuery={setQuery}/>
         <NumResults movies={movies} />
       </Navbar>
       <MainContent>
