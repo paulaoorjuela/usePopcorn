@@ -7,9 +7,9 @@ import MovieList from "./main-content-components/list-box-components/MovieList";
 import MovieDisplayBox from "./main-content-components/MovieDisplayBox";
 import WatchedMoviesSummary from "./main-content-components/watched-box-components/WatchedMoviesSummary";
 import WatchedMoviesList from "./main-content-components/watched-box-components/WatchedMoviesList";
-import Loader from "./Loader";
-import ErrorMessage from "./ErrorMessage";
-import MovieDatails from "./MovieDetails";
+import Loader from "./shared/Loader";
+import ErrorMessage from "./shared/ErrorMessage";
+import MovieDatails from "./main-content-components/MovieDetails";
 
 const tempWatchedData = [
   {

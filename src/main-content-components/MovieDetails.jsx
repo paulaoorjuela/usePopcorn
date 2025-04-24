@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import StarRating from "./StarRating";
-import Loader from "./Loader";
+import StarRating from "../StarRating";
+import Loader from "../shared/Loader";
 const KEY = import.meta.env.VITE_KEY;
 
 export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatched, watched }) {
@@ -50,6 +50,11 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
         }
         getMovieDetails();
     }, [movieId]);
+
+    useEffect(function(){
+        if(!title)return
+        document.title = `usePopcorn | ${title}`
+    }, [title])
 
     return (
         <div className="details">
