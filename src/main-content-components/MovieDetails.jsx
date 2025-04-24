@@ -54,6 +54,10 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
     useEffect(function(){
         if(!title)return
         document.title = `usePopcorn | ${title}`
+
+        return function(){
+            document.title = 'usePopcorn'
+        }
     }, [title])
 
     return (
