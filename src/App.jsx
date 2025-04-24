@@ -62,8 +62,8 @@ const KEY = import.meta.env.VITE_KEY;
 
 export default function App() {
   const [query, setQuery] = useState("");
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState('')
   const [selectedMovieId, setSelectedMovieId] = useState(null)
@@ -76,6 +76,14 @@ export default function App() {
     setSelectedMovieId(null)
   }
 
+  function handleAddWatched(movie){
+    setWatched(watched => [...watched, movie])
+  }
+
+  function handleDeleteWatched(movieId){
+    setWatched(watched => watched.filter(movie => movie.imdbID !== movieId))
+
+  }
 
   useEffect(function(){
     async function fetchMovies() {
@@ -120,11 +128,16 @@ export default function App() {
         </MovieDisplayBox>
         <MovieDisplayBox>
           {selectedMovieId ? (
-            <MovieDatails movieId={selectedMovieId} onCloseMovieDetails={handleCloseMovieDetails}/>
+            <MovieDatails 
+              movieId={selectedMovieId} 
+              onCloseMovieDetails={handleCloseMovieDetails} 
+              onAddWatched={handleAddWatched} 
+              watched={watched}
+            />
           ) :
           <>
             <WatchedMoviesSummary watched={watched} />
-            <WatchedMoviesList watched={watched} />
+            <WatchedMoviesList watched={watched} onDeleteWatched={handleDeleteWatched}/>
           </>
           }
         </MovieDisplayBox>

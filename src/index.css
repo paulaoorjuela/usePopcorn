@@ -309,7 +309,13 @@ body {
   transition: all 0.3s;
 }
 
-.btn-add:hover {
+.btn-add:disabled{
+  background-color: var(--color-background-500);
+  color: var(--color-text-dark);
+  cursor: not-allowed;
+}
+
+.btn-add:not(:disabled):hover {
   background-color: var(--color-primary-light);
 }
 
