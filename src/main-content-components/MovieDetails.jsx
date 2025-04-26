@@ -38,6 +38,21 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
         onCloseMovieDetails() // Close the detail after adding to the list
     }
 
+    // Close movie details by pressing Escape
+    useEffect(function(){
+        function callBack(e){
+            if(e.code === 'Escape'){
+                onCloseMovieDetails()
+                console.log('Escape pressed')
+            }
+        }
+        document.addEventListener('keydown', callBack) // pass same callback function to both events 
+        // Clean event listener
+        return function(){
+            document.removeEventListener('keydown', callBack) // pass same callback function to both events 
+        }
+    }, [onCloseMovieDetails])
+
     useEffect(function () {
         async function getMovieDetails() {
             setIsLoading(true)
