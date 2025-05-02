@@ -24,6 +24,9 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
         Genre: genre
     } = movie;
 
+    const isTop = imdbRating > 8
+    console.log(isTop)
+    
     function handleAdd(){
         const newWatchedMovie = {
             imdbID: movieId,
@@ -43,7 +46,7 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
         function callBack(e){
             if(e.code === 'Escape'){
                 onCloseMovieDetails()
-                console.log('Escape pressed')
+                // console.log('Escape pressed')
             }
         }
         document.addEventListener('keydown', callBack) // pass same callback function to both events 
