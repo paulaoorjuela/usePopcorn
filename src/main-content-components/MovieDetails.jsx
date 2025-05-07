@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import StarRating from "../StarRating";
 import Loader from "../shared/Loader";
 const KEY = import.meta.env.VITE_KEY;
@@ -7,6 +7,8 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
     const [movie, setMovie] = useState({});
     const [isLoading, setIsLoading] = useState(false)
     const [userRating, setUserRating] = useState(0)
+
+    const countRef = useRef(0)
 
     const isWatched = watched.map(movie => movie.imdbID).includes(movieId)
     const watchedUserRating = watched.find(movie => movie.imdbID === movieId)?.userRating
@@ -35,7 +37,8 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
             poster,
             imdbRating: Number(imdbRating),
             runtime: Number(runtime.split(" ").at(0)),
-            userRating
+            userRating,
+            countRatingDecisions : countRef.current,
         }
         onAddWatched(newWatchedMovie)
         onCloseMovieDetails() // Close the detail after adding to the list
@@ -77,6 +80,10 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
             document.title = 'usePopcorn'
         }
     }, [title])
+
+    useEffect(function(){
+        if(userRating) countRef.current = countRef.current++
+    },[userRating])
 
     return (
         <div className="details">
