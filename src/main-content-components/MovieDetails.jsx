@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import StarRating from "../StarRating";
 import Loader from "../shared/Loader";
+import { useKey } from "../custom-hooks/useKey";
 const KEY = import.meta.env.VITE_KEY;
 
 export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatched, watched }) {
@@ -45,19 +46,7 @@ export default function MovieDatails({ movieId, onCloseMovieDetails, onAddWatche
     }
 
     // Close movie details by pressing Escape
-    useEffect(function(){
-        function callBack(e){
-            if(e.code === 'Escape'){
-                onCloseMovieDetails()
-                // console.log('Escape pressed')
-            }
-        }
-        document.addEventListener('keydown', callBack) // pass same callback function to both events 
-        // Clean event listener
-        return function(){
-            document.removeEventListener('keydown', callBack) // pass same callback function to both events 
-        }
-    }, [onCloseMovieDetails])
+    useKey('Escape', onCloseMovieDetails)
 
     useEffect(function () {
         async function getMovieDetails() {
